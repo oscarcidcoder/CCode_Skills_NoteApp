@@ -1,0 +1,26 @@
+# Plantilla de Skill para Pi
+
+## Información básica
+- **Nombre**: {{NOMBRE_SKILL}}
+- **Descripción**: {{DESCRIPCION}}
+- **Autor**: {{AUTOR}}
+- **Versión**: {{VERSION}}
+
+## Estructura sugerida
+```
+{{NOMBRE_SKILL}}/
+├── SKILL.md
+├── scripts/
+├── references/
+└── assets/
+```
+
+## Checklist al crear una skill
+
+- [ ] Directorio creado en `.agents/skills/`
+- [ ] `SKILL.md` con frontmatter válido
+- [ ] `name` único y descriptivo
+- [ ] `description` clara para routing
+- [ ] Scripts ejecutables si los hay
+- [ ] Referencias documentadas
+- [ ] Probada con `/skill:{{NOMBRE_SKILL}}`
