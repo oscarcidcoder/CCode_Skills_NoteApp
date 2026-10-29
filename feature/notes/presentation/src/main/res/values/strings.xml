@@ -1,0 +1,30 @@
+<resources>
+    <string name="notes_title">Notes</string>
+    <string name="no_notes_yet">No notes yet</string>
+    <string name="tap_add_to_create">Tap the + button to create your first note</string>
+    <string name="new_note">New Note</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="title_label">Title</string>
+    <string name="title_placeholder">Enter a title</string>
+    <string name="content_label">Content</string>
+    <string name="content_placeholder">Write your note…</string>
+    <string name="save_note">Save</string>
+    <string name="saving">Saving…</string>
+
+    <string name="error_title_empty">Title cannot be empty</string>
+    <string name="error_content_too_long">Content is too long</string>
+    <string name="error_note_not_found">Note not found</string>
+    <string name="error_unknown">Something went wrong</string>
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_server">Server error</string>
+    <string name="error_unauthorized">Unauthorized</string>
+    <string name="error_timeout">Request timed out</string>
+    <string name="error_not_found">Not found</string>
+    <string name="error_conflict">Conflict</string>
+    <string name="error_bad_request">Bad request</string>
+    <string name="error_too_many_requests">Too many requests</string>
+    <string name="error_payload_too_large">Data too large</string>
+    <string name="error_service_unavailable">Service unavailable</string>
+    <string name="error_serialization">Serialization error</string>
+    <string name="error_disk_full">Storage full</string>
+</resources>

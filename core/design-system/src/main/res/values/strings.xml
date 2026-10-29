@@ -1,0 +1,9 @@
+<resources>
+    <string name="cd_add_note">Add note</string>
+    <string name="cd_edit_note">Edit note</string>
+    <string name="cd_delete_note">Delete note</string>
+    <string name="cd_back">Back</string>
+    <string name="cd_save_note">Save note</string>
+    <string name="cd_note">Note</string>
+    <string name="cd_refresh">Refresh</string>
+</resources>

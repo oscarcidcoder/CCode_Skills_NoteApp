@@ -1,0 +1,41 @@
+package com.example.notesapp.core.designsystem.theme
+
+import androidx.compose.ui.graphics.Color
+
+object BrandColors {
+    val lightPrimary = Color(0xFF3B5C00)
+    val lightOnPrimary = Color(0xFFFFFFFF)
+    val lightPrimaryContainer = Color(0xFFB8F397)
+    val lightOnPrimaryContainer = Color(0xFF072100)
+    val lightSecondary = Color(0xFF54634D)
+    val lightOnSecondary = Color(0xFFFFFFFF)
+    val lightSecondaryContainer = Color(0xFFD7E8CD)
+    val lightOnSecondaryContainer = Color(0xFF121F0E)
+    val lightSurface = Color(0xFFF8FAF2)
+    val lightOnSurface = Color(0xFF191D17)
+    val lightSurfaceVariant = Color(0xFFDFE4D7)
+    val lightOnSurfaceVariant = Color(0xFF43483F)
+    val lightError = Color(0xFFBA1A1A)
+    val lightOnError = Color(0xFFFFFFFF)
+    val lightErrorContainer = Color(0xFFFFDAD6)
+    val lightOnErrorContainer = Color(0xFF410002)
+    val lightOutline = Color(0xFF73776E)
+
+    val darkPrimary = Color(0xFFB8F397)
+    val darkOnPrimary = Color(0xFF1D3700)
+    val darkPrimaryContainer = Color(0xFF2C5200)
+    val darkOnPrimaryContainer = Color(0xFFD4F7B4)
+    val darkSecondary = Color(0xFFBBCDB2)
+    val darkOnSecondary = Color(0xFF263420)
+    val darkSecondaryContainer = Color(0xFF3C4B36)
+    val darkOnSecondaryContainer = Color(0xFFD7E8CD)
+    val darkSurface = Color(0xFF11140F)
+    val darkOnSurface = Color(0xFFE1E4DA)
+    val darkSurfaceVariant = Color(0xFF43483F)
+    val darkOnSurfaceVariant = Color(0xFFC3C8BB)
+    val darkError = Color(0xFFFFB4AB)
+    val darkOnError = Color(0xFF690005)
+    val darkErrorContainer = Color(0xFF93000A)
+    val darkOnErrorContainer = Color(0xFFFFDAD6)
+    val darkOutline = Color(0xFF8D9286)
+}
