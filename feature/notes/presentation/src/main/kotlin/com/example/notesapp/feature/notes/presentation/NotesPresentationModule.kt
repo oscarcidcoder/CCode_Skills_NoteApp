@@ -1,5 +1,6 @@
 package com.example.notesapp.feature.notes.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import com.example.notesapp.feature.notes.presentation.notelist.NoteListViewModel
 import com.example.notesapp.feature.notes.presentation.noteeditor.NoteEditorViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -8,12 +9,11 @@ import org.koin.dsl.module
 
 val notesPresentationModule = module {
     viewModelOf(::NoteListViewModel)
-    viewModel { (params: org.koin.core.parameter.ParametersHolder) ->
-        val noteId = params.get<String?>("noteId")
+
+    viewModel { (noteId: String?) ->
         NoteEditorViewModel(
-            savedStateHandle = androidx.lifecycle.SavedStateHandle(
-                mapOf("noteId" to noteId)
-            ),
+            noteId = noteId,
+            savedStateHandle = get(),
             noteRepository = get()
         )
     }

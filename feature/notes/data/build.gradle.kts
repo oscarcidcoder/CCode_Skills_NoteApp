@@ -11,4 +11,9 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
+
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.assertk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

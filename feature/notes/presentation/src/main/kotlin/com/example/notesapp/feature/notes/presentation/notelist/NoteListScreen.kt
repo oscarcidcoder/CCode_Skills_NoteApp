@@ -33,7 +33,7 @@ import com.example.notesapp.core.designsystem.theme.AppTheme
 import com.example.notesapp.core.presentation.UiText
 import com.example.notesapp.core.presentation.getString
 import com.example.notesapp.feature.notes.presentation.NoteUi
-import com.example.notesapp.R
+import com.example.notesapp.core.designsystem.R as DesignSystemR
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -66,8 +66,9 @@ fun NoteListScreen(
 
     LaunchedEffect(state.error) {
         state.error?.let { uiText ->
-            snackbarHostState.showSnackbar(uiText.getString(androidx.compose.ui.platform.LocalContext.current.resources))
-            onAction(NoteListAction.OnRefreshClick) // Clear by refresh? No — handle elsewhere
+            snackbarHostState.showSnackbar(
+                uiText.getString(androidx.compose.ui.platform.LocalContext.current.resources)
+            )
         }
     }
 
@@ -85,7 +86,7 @@ fun NoteListScreen(
             ) {
                 Icon(
                     painter = AppIcons.Add,
-                    contentDescription = stringResource(R.string.cd_add_note)
+                    contentDescription = stringResource(DesignSystemR.string.cd_add_note)
                 )
             }
         }

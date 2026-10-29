@@ -2,7 +2,6 @@ package com.example.notesapp.core.presentation
 
 import com.example.notesapp.core.domain.DataError
 import com.example.notesapp.core.domain.UiText
-import com.example.notesapp.R
 
 fun DataError.toUiText(): UiText {
     return when (this) {
@@ -26,6 +25,6 @@ fun DataError.toUiText(): UiText {
 fun UiText.getString(resources: android.content.res.Resources): String {
     return when (this) {
         is UiText.DynamicString -> value
-        is UiText.StringResource -> resources.getString(id, *args)
+        is UiText.StringResource -> resources.getString(id, *args.toTypedArray())
     }
 }

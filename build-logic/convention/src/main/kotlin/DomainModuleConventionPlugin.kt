@@ -29,13 +29,13 @@ class DomainModuleConventionPlugin : Plugin<Project> {
 
             dependencies {
                 implementation(libs.kotlin.stdlib)
-                implementation(libs.kotlinx.coroutines.android)
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.datetime)
-                implementation(libs.assertk)
                 testImplementation(libs.junit.jupiter.api)
                 testImplementation(libs.turbine)
                 testImplementation(libs.kotlinx.coroutines.test)
+                testImplementation(libs.assertk)
             }
         }
     }

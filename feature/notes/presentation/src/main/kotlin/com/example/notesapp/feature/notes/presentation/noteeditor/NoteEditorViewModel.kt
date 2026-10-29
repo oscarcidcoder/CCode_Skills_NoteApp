@@ -3,6 +3,8 @@ package com.example.notesapp.feature.notes.presentation.noteeditor
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.notesapp.core.domain.Result
+import com.example.notesapp.core.domain.UiText
 import com.example.notesapp.core.domain.onFailure
 import com.example.notesapp.core.domain.onSuccess
 import com.example.notesapp.feature.notes.domain.Note
@@ -18,11 +20,10 @@ import kotlinx.datetime.Clock
 import java.util.UUID
 
 class NoteEditorViewModel(
+    private val noteId: String?,
     private val savedStateHandle: SavedStateHandle,
     private val noteRepository: NoteRepository
 ) : ViewModel() {
-
-    private val noteId: String? = savedStateHandle.get<String>("noteId")
 
     private val _state = MutableStateFlow(
         NoteEditorState(
@@ -37,26 +38,22 @@ class NoteEditorViewModel(
     val events = _events.receiveAsFlow()
 
     init {
-        noteId?.let { loadNote(it) }
+        noteId?.let(::loadNote)
     }
 
     fun onAction(action: NoteEditorAction) {
         when (action) {
-            is NoteEditorAction.OnTitleChange -> onTitleChange(action.title)
-            is NoteEditorAction.OnContentChange -> onContentChange(action.content)
+            is NoteEditorAction.OnTitleChange -> {
+                savedStateHandle["title"] = action.title
+                _state.update { it.copy(title = action.title, error = null) }
+            }
+            is NoteEditorAction.OnContentChange -> {
+                savedStateHandle["content"] = action.content
+                _state.update { it.copy(content = action.content, error = null) }
+            }
             is NoteEditorAction.OnSaveClick -> saveNote()
-            is NoteEditorAction.OnDeleteClick -> deleteNote(action.noteId)
+            is NoteEditorAction.OnDeleteClick -> deleteNote()
         }
-    }
-
-    private fun onTitleChange(title: String) {
-        savedStateHandle["title"] = title
-        _state.update { it.copy(title = title, error = null) }
-    }
-
-    private fun onContentChange(content: String) {
-        savedStateHandle["content"] = content
-        _state.update { it.copy(content = content, error = null) }
     }
 
     private fun loadNote(id: String) {
@@ -83,23 +80,24 @@ class NoteEditorViewModel(
     private fun saveNote() {
         val current = _state.value
         if (current.title.isBlank()) {
-            _state.update { it.copy(error = com.example.notesapp.core.domain.UiText.StringResource(com.example.notesapp.R.string.error_title_empty)) }
+            _state.update { it.copy(error = UiText.StringResource(com.example.notesapp.feature.notes.presentation.R.string.error_title_empty)) }
             return
         }
 
         if (current.content.length > MAX_CONTENT_LENGTH) {
-            _state.update { it.copy(error = com.example.notesapp.core.domain.UiText.StringResource(com.example.notesapp.R.string.error_content_too_long)) }
+            _state.update { it.copy(error = UiText.StringResource(com.example.notesapp.feature.notes.presentation.R.string.error_content_too_long)) }
             return
         }
 
         viewModelScope.launch {
             _state.update { it.copy(isSaving = true) }
             val now = Clock.System.now()
+            val existingCreatedAt = noteId?.let { existingNoteCreatedAt(it) } ?: now
             val note = Note(
                 id = noteId ?: UUID.randomUUID().toString(),
                 title = current.title.trim(),
                 content = current.content.trim(),
-                createdAt = if (noteId == null) now else getExistingCreatedAt(),
+                createdAt = existingCreatedAt,
                 updatedAt = now
             )
             noteRepository.saveNote(note)
@@ -114,20 +112,15 @@ class NoteEditorViewModel(
         }
     }
 
-    private suspend fun getExistingCreatedAt(): kotlinx.datetime.Instant {
-        // For existing notes, we need the original createdAt.
-        // Fetch it from repository.
-        return noteId?.let { id ->
-            noteRepository.getNote(id).let { result ->
-                when (result) {
-                    is com.example.notesapp.core.domain.Result.Success -> result.data.createdAt
-                    is com.example.notesapp.core.domain.Result.Error -> Clock.System.now()
-                }
-            }
-        } ?: Clock.System.now()
+    private suspend fun existingNoteCreatedAt(id: String): kotlinx.datetime.Instant {
+        return when (val result = noteRepository.getNote(id)) {
+            is Result.Success -> result.data.createdAt
+            is Result.Error -> Clock.System.now()
+        }
     }
 
-    private fun deleteNote(id: String) {
+    private fun deleteNote() {
+        val id = noteId ?: return
         viewModelScope.launch {
             noteRepository.deleteNote(id)
                 .onSuccess {

@@ -1,8 +1,6 @@
 package com.example.notesapp.core.domain
 
-import androidx.annotation.StringRes
-
 sealed interface UiText {
     data class DynamicString(val value: String) : UiText
-    class StringResource(@StringRes val id: Int, val args: Array<Any> = emptyArray()) : UiText
+    data class StringResource(val id: Int, val args: List<Any> = emptyList()) : UiText
 }

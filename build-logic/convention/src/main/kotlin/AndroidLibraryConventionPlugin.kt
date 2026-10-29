@@ -14,7 +14,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 
             configure<com.android.build.api.dsl.LibraryExtension> {
-                namespace = "com.example.notesapp.${project.name.replace(":", ".")}"
+                namespace = namespaceFromPath()
                 compileSdk = 34
 
                 defaultConfig {

@@ -39,7 +39,7 @@ import com.example.notesapp.core.designsystem.icons.AppIcons
 import com.example.notesapp.core.designsystem.theme.AppTheme
 import com.example.notesapp.core.presentation.ObserveAsEvents
 import com.example.notesapp.core.presentation.getString
-import com.example.notesapp.R
+import com.example.notesapp.core.designsystem.R as DesignSystemR
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -47,7 +47,9 @@ import org.koin.core.parameter.parametersOf
 fun NoteEditorRoot(
     noteId: String?,
     onNavigateBack: () -> Unit,
-    viewModel: NoteEditorViewModel = koinViewModel(parameters = { parametersOf(noteId) })
+    viewModel: NoteEditorViewModel = koinViewModel(
+        parameters = { parametersOf(noteId) }
+    )
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -94,14 +96,14 @@ fun NoteEditorScreen(
                     if (state.isNewNote) R.string.new_note else R.string.edit_note
                 ),
                 navigationIcon = AppIcons.ChevronLeft,
-                navigationIconContentDescription = stringResource(R.string.cd_back),
+                navigationIconContentDescription = stringResource(DesignSystemR.string.cd_back),
                 onNavigationClick = onNavigateBack,
                 actions = {
                     if (!state.isNewNote) {
-                        IconButton(onClick = { onAction(NoteEditorAction.OnDeleteClick("")) }) {
+                        IconButton(onClick = { onAction(NoteEditorAction.OnDeleteClick) }) {
                             Icon(
                                 painter = AppIcons.Delete,
-                                contentDescription = stringResource(R.string.cd_delete_note),
+                                contentDescription = stringResource(DesignSystemR.string.cd_delete_note),
                                 tint = MaterialTheme.colorScheme.error
                             )
                         }

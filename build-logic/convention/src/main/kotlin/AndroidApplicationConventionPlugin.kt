@@ -58,7 +58,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
             dependencies {
                 implementation(libs.androidx.core.ktx)
-                implementation(libs.androidx.activity.compose)
+                implementation(libs.activity.compose)
                 implementation(libs.lifecycle.runtime.compose)
                 implementation(libs.lifecycle.viewmodel.compose)
                 implementation(libs.lifecycle.viewmodel.ktx)
@@ -70,8 +70,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 implementation(libs.navigation.compose)
                 implementation(libs.koin.android)
                 implementation(libs.koin.androidx.compose)
-                implementation(project(":core:design-system"))
-                implementation(project(":feature:notes:presentation"))
             }
         }
     }

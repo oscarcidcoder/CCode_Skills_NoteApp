@@ -19,4 +19,10 @@ dependencies {
     implementation(libs.compose.animation)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.datetime)
+
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.assertk)
+    testImplementation(libs.turbine)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

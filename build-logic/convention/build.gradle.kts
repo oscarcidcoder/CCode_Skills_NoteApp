@@ -9,6 +9,6 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.kotlin.serialization)
-    implementation(libs.ksp)
+    // No direct dependencies needed; convention plugins reference
+    // the version catalog via the project's settings.gradle.kts
 }

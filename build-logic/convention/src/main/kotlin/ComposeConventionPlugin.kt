@@ -6,6 +6,12 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.implementation
 
+fun Project.namespaceFromPath(default: String = "com.example.notesapp"): String {
+    val segments = path.split(':').filter { it.isNotEmpty() }
+    if (segments.isEmpty()) return default
+    return "$default.${segments.joinToString(".")}"
+}
+
 class ComposeConventionPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         with(project) {
@@ -14,7 +20,7 @@ class ComposeConventionPlugin : Plugin<Project> {
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 
             configure<com.android.build.api.dsl.LibraryExtension> {
-                namespace = "com.example.notesapp.${project.name.replace(":", ".")}"
+                namespace = namespaceFromPath()
                 compileSdk = 34
 
                 defaultConfig {

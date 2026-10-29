@@ -53,13 +53,8 @@ class NoteListViewModel(
     }
 
     private fun refreshNotes() {
-        // The Flow collection already handles loading. Set loading state for UX.
-        viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-            // Re-collect is not needed; the Flow will emit. Briefly show spinner.
-            kotlinx.coroutines.delay(300)
-            _state.update { it.copy(isLoading = false) }
-        }
+        // Notes are observed reactively via Flow; a manual refresh just clears any error.
+        _state.update { it.copy(error = null) }
     }
 
     private fun deleteNote(noteId: String) {

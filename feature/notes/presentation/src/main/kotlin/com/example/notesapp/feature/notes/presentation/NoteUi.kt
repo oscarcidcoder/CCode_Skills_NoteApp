@@ -3,7 +3,6 @@ package com.example.notesapp.feature.notes.presentation
 import com.example.notesapp.feature.notes.domain.Note
 import com.example.notesapp.feature.notes.domain.NoteError
 import com.example.notesapp.core.domain.UiText
-import com.example.notesapp.R
 
 data class NoteUi(
     val id: String,
@@ -33,6 +32,6 @@ fun NoteError.toUiText(): UiText {
         NoteError.NOT_FOUND -> UiText.StringResource(R.string.error_note_not_found)
         NoteError.VALIDATION_TITLE_EMPTY -> UiText.StringResource(R.string.error_title_empty)
         NoteError.VALIDATION_CONTENT_TOO_LONG -> UiText.StringResource(R.string.error_content_too_long)
-        NoteError.UNKNOWN -> UiText.StringResource(R.string.error_unknown)
+        NoteError.UNKNOWN -> UiText.StringResource(com.example.notesapp.core.presentation.R.string.error_unknown)
     }
 }

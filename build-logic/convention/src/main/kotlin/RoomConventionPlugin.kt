@@ -13,7 +13,7 @@ class RoomConventionPlugin : Plugin<Project> {
             pluginManager.apply("com.google.devtools.ksp")
 
             configure<com.android.build.api.dsl.LibraryExtension> {
-                namespace = "com.example.notesapp.${project.name.replace(":", ".")}"
+                namespace = namespaceFromPath()
                 compileSdk = 34
 
                 defaultConfig {

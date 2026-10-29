@@ -19,7 +19,7 @@ import com.example.notesapp.core.designsystem.components.AppCard
 import com.example.notesapp.core.designsystem.icons.AppIcons
 import com.example.notesapp.core.designsystem.theme.AppTheme
 import com.example.notesapp.feature.notes.presentation.NoteUi
-import com.example.notesapp.R
+import com.example.notesapp.core.designsystem.R as DesignSystemR
 
 @Composable
 fun NoteItem(
@@ -70,7 +70,7 @@ fun NoteItem(
             IconButton(onClick = onDeleteClick) {
                 Icon(
                     painter = AppIcons.Delete,
-                    contentDescription = stringResource(R.string.cd_delete_note),
+                    contentDescription = stringResource(DesignSystemR.string.cd_delete_note),
                     tint = MaterialTheme.colorScheme.error
                 )
             }
