@@ -1,10 +1,11 @@
 package com.example.buildlogic
 
 import org.gradle.api.Plugin
+import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.withType
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.implementation
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(project: Project) {
@@ -16,6 +17,10 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             configure<com.android.build.api.dsl.ApplicationExtension> {
                 namespace = "com.example.notesapp"
                 compileSdk = 34
+
+                buildFeatures {
+                    compose = true
+                }
 
                 defaultConfig {
                     applicationId = "com.example.notesapp"
@@ -42,11 +47,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     targetCompatibility = JavaVersion.VERSION_17
                 }
 
-                kotlinOptions {
-                    jvmTarget = "17"
-                    freeCompilerArgs += listOf("-Xopt-in=kotlin.RequiresOptIn")
-                }
-
                 composeOptions {
                     kotlinCompilerExtensionVersion = "1.5.12"
                 }
@@ -56,20 +56,29 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 }
             }
 
+            // En un plugin class-based no existen los accessors del DSL: kotlinOptions
+            // no esta disponible dentro del bloque android, se configura en las tareas.
+            tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+                kotlinOptions.jvmTarget = "17"
+                kotlinOptions.freeCompilerArgs += listOf(
+                    "-Xopt-in=kotlin.RequiresOptIn"
+                )
+            }
+
             dependencies {
-                implementation(libs.androidx.core.ktx)
-                implementation(libs.activity.compose)
-                implementation(libs.lifecycle.runtime.compose)
-                implementation(libs.lifecycle.viewmodel.compose)
-                implementation(libs.lifecycle.viewmodel.ktx)
-                implementation(libs.compose.bom)
-                implementation(libs.compose.material3)
-                implementation(libs.compose.ui.tooling.preview)
-                implementation(libs.compose.animation)
-                implementation(libs.compose.animation.graphics)
-                implementation(libs.navigation.compose)
-                implementation(libs.koin.android)
-                implementation(libs.koin.androidx.compose)
+                add("implementation", libs.findLibrary("androidx-core-ktx").get())
+                add("implementation", libs.findLibrary("activity-compose").get())
+                add("implementation", libs.findLibrary("lifecycle-runtime-compose").get())
+                add("implementation", libs.findLibrary("lifecycle-viewmodel-compose").get())
+                add("implementation", libs.findLibrary("lifecycle-viewmodel-ktx").get())
+                add("implementation", platform(libs.findLibrary("compose-bom").get()))
+                add("implementation", libs.findLibrary("compose-material3").get())
+                add("implementation", libs.findLibrary("compose-ui-tooling-preview").get())
+                add("implementation", libs.findLibrary("compose-animation").get())
+                add("implementation", libs.findLibrary("compose-animation-graphics").get())
+                add("implementation", libs.findLibrary("navigation-compose").get())
+                add("implementation", libs.findLibrary("koin-android").get())
+                add("implementation", libs.findLibrary("koin-androidx-compose").get())
             }
         }
     }

@@ -2,8 +2,9 @@ package com.example.buildlogic
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.withType
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.implementation
 
 class DomainModuleConventionPlugin : Plugin<Project> {
     override fun apply(project: Project) {
@@ -14,28 +15,28 @@ class DomainModuleConventionPlugin : Plugin<Project> {
             group = "com.example.notesapp"
             version = "1.0"
 
-            java {
+            extensions.configure<org.gradle.api.plugins.JavaPluginExtension> {
                 toolchain {
-                    languageVersion.set(JavaLanguageVersion.of(17))
+                    languageVersion.set(org.gradle.jvm.toolchain.JavaLanguageVersion.of(17))
                 }
             }
 
-            tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-                kotlinOptions {
-                    jvmTarget = "17"
-                    freeCompilerArgs += listOf("-Xopt-in=kotlin.RequiresOptIn")
-                }
+            tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+                kotlinOptions.jvmTarget = "17"
+                kotlinOptions.freeCompilerArgs += listOf(
+                    "-Xopt-in=kotlin.RequiresOptIn"
+                )
             }
 
             dependencies {
-                implementation(libs.kotlin.stdlib)
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.serialization.json)
-                implementation(libs.kotlinx.datetime)
-                testImplementation(libs.junit.jupiter.api)
-                testImplementation(libs.turbine)
-                testImplementation(libs.kotlinx.coroutines.test)
-                testImplementation(libs.assertk)
+                add("implementation", libs.findLibrary("kotlin-stdlib").get())
+                add("implementation", libs.findLibrary("kotlinx-coroutines-core").get())
+                add("implementation", libs.findLibrary("kotlinx-serialization-json").get())
+                add("implementation", libs.findLibrary("kotlinx-datetime").get())
+                add("testImplementation", libs.findLibrary("junit-jupiter-api").get())
+                add("testImplementation", libs.findLibrary("turbine").get())
+                add("testImplementation", libs.findLibrary("kotlinx-coroutines-test").get())
+                add("testImplementation", libs.findLibrary("assertk").get())
             }
         }
     }

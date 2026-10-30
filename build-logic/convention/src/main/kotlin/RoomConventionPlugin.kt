@@ -1,11 +1,11 @@
 package com.example.buildlogic
 
 import org.gradle.api.Plugin
+import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.withType
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.implementation
-import org.gradle.kotlin.dsl.ksp
 
 class RoomConventionPlugin : Plugin<Project> {
     override fun apply(project: Project) {
@@ -34,22 +34,27 @@ class RoomConventionPlugin : Plugin<Project> {
                     targetCompatibility = JavaVersion.VERSION_17
                 }
 
-                kotlinOptions {
-                    jvmTarget = "17"
-                    freeCompilerArgs += listOf("-Xopt-in=kotlin.RequiresOptIn", "-Xroom.enable-suspending-dao-queries")
-                }
-
                 packagingOptions {
                     resources.excludes += "META-INF/*.kotlin_module"
                 }
             }
 
+            // En un plugin class-based no existen los accessors del DSL: kotlinOptions
+            // no esta disponible dentro del bloque android, se configura en las tareas.
+            tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+                kotlinOptions.jvmTarget = "17"
+                kotlinOptions.freeCompilerArgs += listOf(
+                    "-Xopt-in=kotlin.RequiresOptIn",
+                    "-Xroom.enable-suspending-dao-queries"
+                )
+            }
+
             dependencies {
-                implementation(libs.androidx.core.ktx)
-                implementation(libs.room.runtime)
-                implementation(libs.room.ktx)
-                implementation(libs.kotlinx.coroutines.android)
-                ksp(libs.room.compiler)
+                add("implementation", libs.findLibrary("androidx-core-ktx").get())
+                add("implementation", libs.findLibrary("room-runtime").get())
+                add("implementation", libs.findLibrary("room-ktx").get())
+                add("implementation", libs.findLibrary("kotlinx-coroutines-android").get())
+                add("ksp", libs.findLibrary("room-compiler").get())
             }
         }
     }
