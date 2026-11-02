@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_disk_full">Not enough storage space to save your notes.</string>
+    <string name="error_not_found">The requested item could not be found.</string>
+    <string name="error_unknown">Something went wrong. Please try again.</string>
+</resources>

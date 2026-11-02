@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!--
+      AAPT requires <adaptive-icon> resources to live in a -v26 folder; the tooling
+      cannot merge them into mipmap-anydpi even though minSdk is 26.
+    -->
+    <issue id="ObsoleteSdkInt">
+        <ignore path="src/main/res/mipmap-anydpi-v26" />
+    </issue>
+</lint>

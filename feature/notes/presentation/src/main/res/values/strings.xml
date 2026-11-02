@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_title">Notes</string>
+    <string name="new_note">New note</string>
+    <string name="new_note_title">New note</string>
+    <string name="edit_note">Edit note</string>
+    <string name="save_note">Save</string>
+    <string name="note_title_label">Title</string>
+    <string name="note_body_label">Note</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="retry">Retry</string>
+
+    <string name="delete_note_title">Delete note?</string>
+    <string name="delete_note_message">%1$s will be permanently deleted. This cannot be undone.</string>
+
+    <string name="error_empty_title">Add a title before saving.</string>
+    <string name="error_title_too_long">Titles can be at most %1$d characters.</string>
+    <string name="error_note_not_found">This note no longer exists.</string>
+
+    <string name="empty_notes_title">No notes yet</string>
+    <string name="empty_notes_message">Create your first note to get started.</string>
+    <string name="create_first_note">Create a note</string>
+
+    <string name="empty_editor_title">No note selected</string>
+    <string name="empty_editor_message">Choose a note from the list or create a new one.</string>
+
+    <string name="cd_delete_note">Delete note</string>
+    <string name="cd_navigate_back">Navigate back</string>
+</resources>
